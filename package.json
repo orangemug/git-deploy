@@ -1,6 +1,9 @@
 {
   "name": "git-deploy",
   "version": "0.0.0",
+  "bin": {
+    "git-deploy" : "./bin/cli.js"
+  },
   "dependencies": {
     "debug": "^3.1.0",
     "fs-extra": "^4.0.2",
