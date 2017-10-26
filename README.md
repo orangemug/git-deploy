@@ -108,7 +108,7 @@ A json schema for the config can be found at [./schemas/config.json](./schemas/c
 
 Also note that the config supports bash style variables with defaults. For example the following will use the `ARTIFACTS_DIR` env variable if defined otherwise default to `public`.
 
-```
+```json
 {
   "local": {
     "path": "${ARTIFACTS_DIR:-public}"
