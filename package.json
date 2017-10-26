@@ -1,8 +1,13 @@
 {
   "name": "git-deploy",
   "version": "0.0.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/orangemug/git-deploy.git"
+  },
   "bin": {
-    "git-deploy" : "./bin/cli.js"
+    "git-deploy": "./bin/cli.js"
   },
   "dependencies": {
     "debug": "^3.1.0",
