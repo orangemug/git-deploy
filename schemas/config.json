@@ -1,0 +1,63 @@
+{
+  "title": "git-deploy config",
+  "type": "object",
+  "properties": {
+    "local": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "git": {
+          "type": "object",
+          "properties": {
+            "tags": {
+              "type": "boolean"
+            },
+            "branches": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": ["tags", "branches"]
+        }
+      }
+    },
+    "remote": {
+      "type": "object",
+      "properties": {
+        "git": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string"
+            },
+            "path": {
+              "type": "string"
+            },
+            "branch": {
+              "type": "string"
+            },
+            "author": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                }
+              },
+              "required": ["name", "email"]
+            }
+          },
+          "required": ["url", "path", "branch", "author"]
+        }
+      },
+      "required": ["git"]
+    }
+  },
+  "required": ["local", "remote"]
+}
