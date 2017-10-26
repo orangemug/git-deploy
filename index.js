@@ -121,6 +121,14 @@ async function push(config) {
       );
     }
 
+    // This protects against adding an additional commit if no files have changed.
+    // This may happen if you try to generate the same build twice.
+    const statuses = await repo.getStatus();
+    if(statuses.length < 1) {
+      debug("Nothing to write");
+      return false;
+    }
+
     const latestTag = semverLatest(await fse.readdir(basePath));
     const latestPath = path.join(basePath, "latest");
     const latestTagPath = path.join(basePath, latestTag);
