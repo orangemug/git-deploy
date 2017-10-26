@@ -1,19 +1,19 @@
+const Ajv          = require('ajv');
+const debug        = require('debug')('git-deploy');
 const fse          = require("fs-extra");
 const git          = require("nodegit");
 const glob         = require("./vendor/promisified/glob");
-const tmp          = require("./vendor/promisified/tmp");
+const mkdirp       = require("./vendor/promisified/mkdirp")
 const moment       = require("moment");
+const path         = require("path");
 const semver       = require("semver");
 const semverLatest = require("./lib/semver-latest");
-const path         = require("path");
-const mkdirp       = require("./vendor/promisified/mkdirp")
-const debug = require('debug')('git-deploy');
-const Ajv = require('ajv');
+const tmp          = require("./vendor/promisified/tmp");
+
 
 const schema = require("./schemas/config.json");
-
-var ajv = new Ajv();
-var validate = ajv.compile(schema);
+const ajv = new Ajv();
+const validate = ajv.compile(schema);
 
 
 async function check(config) {
