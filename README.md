@@ -100,7 +100,7 @@ builds
 └── latest -> ./0.2.0
 ```
 
-You'll notice it's also added a symlink pointing towards the latest _non prerelease_ build.
+You'll notice it's also added a `latest` symlink pointing towards the latest _non prerelease_ build.
 
 
 ## Config
