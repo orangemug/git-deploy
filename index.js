@@ -8,10 +8,21 @@ const semverLatest = require("./lib/semver-latest");
 const path         = require("path");
 const mkdirp       = require("./vendor/promisified/mkdirp")
 const debug = require('debug')('git-deploy');
+const Ajv = require('ajv');
+
+const schema = require("./schemas/config.json");
+
+var ajv = new Ajv();
+var validate = ajv.compile(schema);
 
 
 async function check(config) {
   let env = Object.assign({}, process.env);
+
+  var valid = validate(config);
+  if (!valid) {
+    throw "Config "+ajv.errorsText(validate.errors)+" see schema <https://github.com/orangemug/git-deploy/blob/master/schemas/config.json>";
+  }
 
   // TODO: Check against the git repo also...
   const localBranches = config.local.git.branches;
