@@ -46,7 +46,7 @@ Ok that was a little confusing lets see an example. We've just pushed a build to
 
 Next up we need to create a config to let `git-deploy` what needs to be deployed and where. Below is an example `config.json` with documentation inline
 
-```
+```js
 {
   // Settings for the local files.
   "local": {
@@ -84,10 +84,10 @@ Now when we run `git-deploy config.json` if we are building a tag (semver) or br
 
 The tag and branch will be defined from the enviroment variables of the CI enviroment. Currently travis and circleci are supported, using the following env variables.
 
- - CIRCLE_BRANCH
- - CIRCLE_TAG
- - TRAVIS_BRANCH
- - TRAVIS_TAG
+ - `CIRCLE_BRANCH`
+ - `CIRCLE_TAG`
+ - `TRAVIS_BRANCH`
+ - `TRAVIS_TAG`
 
 The resulting directory struture in the target repository will look something like this
 
