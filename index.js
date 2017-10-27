@@ -111,9 +111,15 @@ async function push(config) {
     })
     const index = await repo.refreshIndex();
 
-    let buildPath = path.relative(process.cwd(), config.local.path);
+    let buildPath;
+    if(config.local.path.match(/^[~/]/)) {
+      buildPath = config.local.path;
+    } else {
+      buildPath = path.relative(process.cwd(), config.local.path);
+    }
     const basePath = path.join(repo.workdir(), "builds");
 
+    debug("build path: "+buildPath);
     var files = await glob(buildPath+"/**/*");
 
 
