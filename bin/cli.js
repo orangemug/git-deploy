@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const yargs = require("yargs");
 const objMap       = require("../lib/obj-map");
 const fse   = require("fs-extra");
