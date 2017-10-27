@@ -118,6 +118,8 @@ Also note that the config supports bash style variables with defaults. For examp
 
 
 ## Generate old builds
+**Note:** This section is a work in progress and not yet complete
+
 To generate builds for old tags branches use another tool called [git-cmd](https://github.com/orangemug/git-cmd) which will checkout your code and run a command for all branches / tags.
 
 ```
