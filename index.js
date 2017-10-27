@@ -157,7 +157,7 @@ async function push(config) {
       // Remove the old symlink. This might fail if it's the first time this
       // operation is run.
       try {
-        awa it fse.unlink(latestPath);
+        await fse.unlink(latestPath);
       }
       catch (err) {
         // Ignore...
