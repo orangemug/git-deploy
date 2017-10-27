@@ -115,7 +115,7 @@ async function push(config) {
     if(config.local.path.match(/^[~/]/)) {
       buildPath = config.local.path;
     } else {
-      buildPath = path.relative(process.cwd(), config.local.path);
+      buildPath = path.join(process.cwd(), config.local.path);
     }
     const basePath = path.join(repo.workdir(), "builds");
 
