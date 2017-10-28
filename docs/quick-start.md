@@ -1,4 +1,4 @@
-# Quick start
+# Quick start
 This guide will show you how to setup `git-deploy` for building a project
 
 
