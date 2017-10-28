@@ -65,8 +65,8 @@ Add the public key while making sure to
 ## CI service
 You'll also need to add your keys to the CI service. Supported is
 
- - CircleCI
- - Travis (in theory)
+ - [CircleCI](#circleci)
+ - [Travis CI](#travisci)
 
 
 ### CircleCI
@@ -77,7 +77,7 @@ Now head over the the circleci and enable builds for this repository. While you'
 Also note, the hostname should be set to `github.com`
 
 
-### Travis
+### Travis CI
 TODO
 
 
