@@ -180,8 +180,15 @@ async function push(config) {
 
 
     const oid = await index.writeTree();
-    const head = await git.Reference.nameToId(repo, "HEAD");
-    const parent = await repo.getCommit(head);
+
+    let parent;
+
+    try {
+      const head = await git.Reference.nameToId(repo, "HEAD");
+      parent = await repo.getCommit(head);
+    } catch(err) {
+      // Ignore error.
+    }
 
 
     var date = moment();
@@ -194,7 +201,12 @@ async function push(config) {
     var author = git.Signature.create(authorName, authorEmail, timestamp, timestampOffset);
     var committer = git.Signature.create(authorName, authorEmail, timestamp, timestampOffset);
 
-    await repo.createCommit("HEAD", author, committer, "Written version '"+outId+"' to builds", oid, [parent]);
+    const parents = [];
+    if(parent) {
+      parents.push(parent);
+    }
+
+    await repo.createCommit("HEAD", author, committer, "Written version '"+outId+"' to builds", oid, parents);
 
 
     const remote = await git.Remote.create(repo, "deploy-target", remoteUrl);
