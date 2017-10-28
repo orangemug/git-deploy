@@ -13,7 +13,7 @@ Pushes builds into a git repository.
 
 Git is a great place to store builds for open source projects. The permissions are already set up for your team, it's usually free and it lives alongside the rest of your code.
 
-This is designed for a CI environment to push build artifacts after the tests pass. But can also be used locally if required.
+`git-deploy` is designed for a CI environment to push build artifacts after the tests pass. But can also be used locally if required.
 
 Note: This was originally designed for the [maputnik/editor](https://github.com/maputnik/editor) build process, but should be generally useful for other projects also.
 
@@ -22,7 +22,7 @@ Note: This was originally designed for the [maputnik/editor](https://github.com/
 To install run
 
 ```
-npm install orangemug/git-deploy
+npm install orangemug/git-deploy --save
 ```
 
 ## Usage
@@ -115,6 +115,8 @@ Also note that the config supports bash style variables with defaults. For examp
   }
 }
 ```
+
+For a full tutorial of how to set this up in a CI environment see [./docs/quick-start.md](/docs/quick-start.md)
 
 
 ## Generate old builds
