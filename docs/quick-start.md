@@ -66,7 +66,7 @@ Add the public key while making sure to
 You'll also need to add your keys to the CI service. Supported is
 
  - [CircleCI](#circleci)
- - [Travis CI](#travisci)
+ - [Travis CI](#travis-ci)
 
 
 ### CircleCI
