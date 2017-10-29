@@ -19,7 +19,7 @@ const validate = ajv.compile(schema);
 async function check(config) {
   let env = Object.assign({}, process.env);
 
-  var valid = validate(config);
+  const valid = validate(config);
   if (!valid) {
     throw "Config "+ajv.errorsText(validate.errors)+" see schema <https://github.com/orangemug/git-deploy/blob/master/schemas/config.json>";
   }
@@ -72,8 +72,8 @@ async function push(config) {
   }
 
   function credentialsFn() {
-    var max = 10;
-    var count = 0;
+    const max = 10;
+    let count = 0;
 
     return function(url, userName) {
       let out = git.Cred.sshKeyFromAgent(userName);
@@ -120,7 +120,7 @@ async function push(config) {
     const basePath = path.join(repo.workdir(), "builds");
 
     debug("build path: "+buildPath);
-    var files = await glob(buildPath+"/**/*");
+    const files = await glob(buildPath+"/**/*");
 
 
     for(fileName of files) {
@@ -131,8 +131,8 @@ async function push(config) {
       }
 
       debug("Writing file to directory: '"+fileName+"'");
-      var fileData = await fse.readFile(fileName);
-      var relFileName = path.relative(buildPath, fileName);
+      const fileData = await fse.readFile(fileName);
+      const relFileName = path.relative(buildPath, fileName);
 
 
       const repoFilePath = path.join(basePath, outId, relFileName);
@@ -169,7 +169,7 @@ async function push(config) {
         // Ignore...
       }
 
-      var relPath = path.relative(path.dirname(latestPath), latestTagPath)
+      const relPath = path.relative(path.dirname(latestPath), latestTagPath);
       await fse.symlink(relPath, latestPath);
 
 
@@ -191,15 +191,15 @@ async function push(config) {
     }
 
 
-    var date = moment();
+    const date = moment();
 
-    var authorName  = config.remote.git.author.name;
-    var authorEmail = config.remote.git.author.email;
-    var timestamp = date.unix();
-    var timestampOffset = date.utcOffset();
+    const authorName  = config.remote.git.author.name;
+    const authorEmail = config.remote.git.author.email;
+    const timestamp = date.unix();
+    const timestampOffset = date.utcOffset();
 
-    var author = git.Signature.create(authorName, authorEmail, timestamp, timestampOffset);
-    var committer = git.Signature.create(authorName, authorEmail, timestamp, timestampOffset);
+    const author = git.Signature.create(authorName, authorEmail, timestamp, timestampOffset);
+    const committer = git.Signature.create(authorName, authorEmail, timestamp, timestampOffset);
 
     const parents = [];
     if(parent) {
