@@ -26,9 +26,9 @@ npm install orangemug/git-deploy --save
 ```
 
 ## Usage
-Git deploy looks at CI enviroment variables to determine the branch / tag thats just been tested. If the _tag_ matches a semver or the _branch_ is one of the configured branches to deploy. It'll deploy files from a specified directory.
+Git deploy looks at CI enviroment variables to determine the branch / tag that's just been tested. If the _tag_ matches a semver or the _branch_ is one of the configured branches to deploy. It'll deploy files from a specified directory locally into the destination repository.
 
-Ok that was a little confusing lets see an example. We've just pushed a build to git first off you're CI enviroment **must** write the build files to a directory. Below we've stored our builds in `/tmp/build`
+Ok that was a little confusing lets see an example. We've just pushed a build to our source git repository first off you're CI enviroment **must** write the build files to a directory. Below we've stored our builds in `/tmp/build`
 
 ```
 /tmp
@@ -44,7 +44,7 @@ Ok that was a little confusing lets see an example. We've just pushed a build to
    └── index.html
 ```
 
-Next up we need to create a config to let `git-deploy` what needs to be deployed and where. Below is an example `config.json` with documentation inline
+Next up we need to create a config to let `git-deploy` know what needs to be deployed and where. Below is an example `config.json` with the documentation inline. Note you'll need to remove the comments as they're not valid JSON
 
 ```js
 {
@@ -80,9 +80,9 @@ Next up we need to create a config to let `git-deploy` what needs to be deployed
 }
 ```
 
-Now when we run `git-deploy config.json` if we are building a tag (semver) or branch (defined in the config). It'll deploy the files to the git repo as defined in the config.
+Now when we run `git-deploy config.json` if we are building a tag (semver) or branch (defined in the config). It'll deploy the files to the remote git repository as defined in the `remote.git.url`.
 
-The tag and branch will be defined from the enviroment variables of the CI enviroment. Currently travis and circleci are supported, using the following env variables.
+The tag and branch will be resolved from the enviroment variables of the CI enviroment. Currently [Travis](https://travis-ci.org) and [CircleCI](https://circleci.com/) are supported, using the following env variables.
 
  - `CIRCLE_BRANCH`
  - `CIRCLE_TAG`
@@ -104,9 +104,9 @@ You'll notice it's also added a `latest` symlink pointing towards the latest _no
 
 
 ## Config
-A json schema for the config can be found at [./schemas/config.json](./schemas/config.json)
+A JSON schema for the config can be found at [./schemas/config.json](./schemas/config.json)
 
-Also note that the config supports bash style variables with defaults. For example the following will use the `ARTIFACTS_DIR` env variable if defined otherwise default to `public`.
+The config also supports bash style variables with defaults. For example the following will use the `ARTIFACTS_DIR` env variable if defined otherwise default to `public`.
 
 ```json
 {
@@ -134,7 +134,7 @@ We first run `git-deploy check` to see if it's a candiate for deploy. Then we ru
 
 
 ## Notes
-You can't have a passphrase on your git ssh keys, more details for OSX here <https://stackoverflow.com/questions/7773181/git-keeps-prompting-me-for-password>
+Your ssh keys must not prompt for a passphrase, more details for OSX here <https://stackoverflow.com/questions/7773181/git-keeps-prompting-me-for-password>
 
 
 ## License

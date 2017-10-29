@@ -1,11 +1,11 @@
 # Quick start
-This guide will show you how to setup `git-deploy` for building a project
+This guide will show you how to setup `git-deploy` and all the associated services for deploying builds.
 
 
 ## Generate ssh key pairs
 First off you'll need to generate some ssh key pairs to use as a deploy key for your target repo.
 
-To do that run the following
+To do that run the following, replacing the example email address with your own.
 
 ```
 ssh-keygen -t rsa -b 4096 -C "your_email@example.com" -f deploy_key
@@ -13,7 +13,7 @@ ssh-keygen -t rsa -b 4096 -C "your_email@example.com" -f deploy_key
 
 **Note:** More info can be found <https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/>
 
-The `-f` in the path to output the deploy key.
+The `-f` is the path to output the deploy key. This will output the keys to the local directory.
 
 
 ## git-deploy config
@@ -52,34 +52,32 @@ The setting should be fairly obvious but the important ones to change are
 
 
 ## GitHub
-Copy your public key into the target repositories deploy keys. This will be the `deploy-key.pub` in the current directory.
+Add your public key into the target repositories deploy keys. This will be the `deploy-key.pub` in the current directory.
 
-Go to the url `https://github.com/USER/REPO/settings/keys` where `USER/REPO` points to your target repo for you builds.
+Go to the url `https://github.com/USER/REPO/settings/keys` where `USER/REPO` points to the target repository for your builds.
 
 Add the public key while making sure to
 
- - allow write access
+ - allow write access (the checkbox in the UI)
  - name it something sensible like `git-deploy`
 
 
 ## CI service
-You'll also need to add your keys to the CI service. Supported is
+You'll also need to add your private key to the CI service. Currently we support
 
- - [CircleCI](#circleci)
- - [Travis CI](#travis-ci)
+ - [CircleCI](https://circleci.com/)
+ - [Travis CI](https://travis-ci.org/)
 
 
 ### CircleCI
-First off you'll need to create a config in your host repository. This will differ depending on your test setup on circleci, however an example can be found here <https://github.com/orangemug/git-deploy-demo/blob/master/.circleci/config.yml>
+First off you'll need to create a config in your host repository. This will differ depending on your test setup on CircleCI, however an example can be found here <https://github.com/orangemug/git-deploy-demo/blob/master/.circleci/config.yml>
 
-Now head over the the circleci and enable builds for this repository. While you're there also add the private key of the ssh pair. You can do this at `https://circleci.com/gh/USER/REPO/edit#ssh`, where user repo are the `USER/REPO` of the repository you want to deploy to.
-
-Also note, the hostname should be set to `github.com`
+Now head over the the CircleCI and enable builds for the source repository. While you're there also add the private key of the ssh key pair. You can do this at `https://circleci.com/gh/USER/REPO/edit#ssh`, where user repo are the `USER/REPO` of the repository you want to deploy to. The hostname should be set to `github.com`
 
 
 ### Travis CI
-TODO
+TODO: Travis is still a work in progress
 
 
 ### Summary
-Now when you push to a configured branch or create a tag with the semver format they should be deployed to your repository.
+Now when you push to a configured branch or create a tag with the semver format they will be deployed to your target repository.
