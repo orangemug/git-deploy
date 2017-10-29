@@ -24,10 +24,7 @@ Create a `.git-deploy/config.json` file in the root of your source repository. A
   "local": {
     "path": "./build",
     "git": {
-      "tags": true,
-      "branches": [
-        "master"
-      ]
+      "tags": true
     }
   },
   "remote": {
@@ -80,4 +77,4 @@ TODO: Travis is still a work in progress
 
 
 ### Summary
-Now when you push to a configured branch or create a tag with the semver format they will be deployed to your target repository.
+Now when you create a tag with the semver format they will be deployed to your target repository.

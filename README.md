@@ -26,7 +26,7 @@ npm install orangemug/git-deploy --save
 ```
 
 ## Usage
-Git deploy looks at CI environment variables to determine the branch / tag that's just been tested. If the _tag_ matches a semver or the _branch_ is one of the configured branches to deploy. It'll deploy files from a specified directory locally into the destination repository.
+Git deploy looks at CI environment variables to determine the tag that's just been tested. If the _tag_ matches a semver, it'll deploy files from a specified directory locally into the destination repository.
 
 Ok that was a little confusing lets see an example. We've just pushed a build to our source git repository first off you're CI environment **must** write the build files to a directory. Below we've stored our builds in `/tmp/build`
 
@@ -55,11 +55,7 @@ Next up we need to create a config to let `git-deploy` know what needs to be dep
     // What to deploy from the git repo.
     "git": {
       // Any tags that match semver should be deployed
-      "tags": true,
-      // Any branches that match `master` should be deployed
-      "branches": [
-        "master"
-      ]
+      "tags": true
     }
   },
   "remote": {
@@ -80,13 +76,11 @@ Next up we need to create a config to let `git-deploy` know what needs to be dep
 }
 ```
 
-Now when we run `git-deploy config.json` if we are building a tag (semver) or branch (defined in the config). It'll deploy the files to the remote git repository as defined in the `remote.git.url`.
+Now when we run `git-deploy config.json` if we are building a tag (semver), it'll deploy the files to the remote git repository as defined in the `remote.git.url`.
 
-The tag and branch will be resolved from the environment variables of the CI environment. Currently [Travis](https://travis-ci.org) and [CircleCI](https://circleci.com/) are supported, using the following env variables.
+The tag will be resolved from the environment variables of the CI environment. Currently [Travis](https://travis-ci.org) and [CircleCI](https://circleci.com/) are supported, using the following env variables.
 
- - `CIRCLE_BRANCH`
  - `CIRCLE_TAG`
- - `TRAVIS_BRANCH`
  - `TRAVIS_TAG`
 
 The resulting directory structure in the target repository will look something like this
@@ -122,10 +116,10 @@ For a full tutorial of how to set this up in a CI environment see [./docs/quick-
 ## Generate old builds
 **Note:** This section is a work in progress and not yet complete
 
-To generate builds for old tags branches use another tool called [git-cmd](https://github.com/orangemug/git-cmd) which will checkout your code and run a command for all branches / tags.
+To generate builds for old tags use another tool called [git-cmd](https://github.com/orangemug/git-cmd) which will checkout your code and run a command for all tags.
 
 ```
-git-cmd --branches --tags "git-deploy check; npm build; git-deploy push"
+git-cmd --tags "git-deploy check; npm build; git-deploy push"
 ```
 
 We first run `git-deploy check` to see if it's a candidate for deploy. Then we run the the build process and push the resulting files.
