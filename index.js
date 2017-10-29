@@ -16,12 +16,22 @@ const ajv = new Ajv();
 const validate = ajv.compile(schema);
 
 
-async function check(config) {
+async function check(config, opts) {
+  opts = Object.assign({
+    experimentalBranchMode: false
+  }, opts)
+
   let env = Object.assign({}, process.env);
 
   const valid = validate(config);
   if (!valid) {
     throw "Config "+ajv.errorsText(validate.errors)+" see schema <https://github.com/orangemug/git-deploy/blob/master/schemas/config.json>";
+  }
+
+  for(branch of config.local.git.branches) {
+    if(semver.valid(branch)) {
+      throw "Config local.git.branches '"+branch+"' cannot be a semver";
+    }
   }
 
   // TODO: Check against the git repo also...
@@ -32,17 +42,17 @@ async function check(config) {
   if(config.local.git.tags && env.CIRCLE_TAG) {
     repoInfo.tag    = env.CIRCLE_TAG;
   }
-  else if(localBranches.indexOf(env.CIRCLE_BRANCH) > -1) {
+  else if(opts.experimentalBranchMode && localBranches.indexOf(env.CIRCLE_BRANCH) > -1) {
     repoInfo.branch = env.CIRCLE_BRANCH;
   }
   else if(env.TRAVIS_TAG) {
     repoInfo.tag    = env.TRAVIS_TAG;
   }
-  else if(env.TRAVIS_BRANCH) {
+  else if(opts.experimentalBranchMode && localBranches.indexOf(env.TRAVIS_BRANCH) > -1) {
     repoInfo.branch = env.TRAVIS_BRANCH;
   }
   else {
-    debug("Not in CI env or branch or tag envs missing.");
+    debug("CI environment tag envs missing.");
     return false;
   }
 
@@ -51,8 +61,7 @@ async function check(config) {
   if(semver.valid(repoInfo.tag)) {
     outId = semver.clean(repoInfo.tag);
   }
-  // Check config branches here...
-  else if(repoInfo.branch === "master") {
+  else if(repoInfo.branch) {
     outId = repoInfo.branch;
   }
   else {
@@ -65,8 +74,8 @@ async function check(config) {
 }
 
 
-async function push(config) {
-  const outId = await check(config);
+async function push(config, opts) {
+  const outId = await check(config, opts);
   if(!outId) {
     return false;
   }

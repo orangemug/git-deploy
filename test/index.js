@@ -94,6 +94,10 @@ async function test(sourceRepoPath, destRepoPath) {
     email: "test@example.com"
   };
 
+  const gitDeployOpts = {
+    experimentalBranchMode: true
+  };
+
   // Setup: Create repo
   const repo = await git.Repository.init(sourceRepoPath, 0);
   const destRepo = await git.Repository.init(destRepoPath, 1);
@@ -152,7 +156,7 @@ async function test(sourceRepoPath, destRepoPath) {
     })
 
     process.env["CIRCLE_BRANCH"] = "master";
-    await gitDeploy.push(config);
+    await gitDeploy.push(config, gitDeployOpts);
 
     const destLog = await commitLog(destRepo, "master");
     assert.equal(destLog.length, 1);
@@ -175,7 +179,7 @@ async function test(sourceRepoPath, destRepoPath) {
 
     process.env["CIRCLE_TAG"] = "0.1.0";
     delete process.env["CIRCLE_BRANCH"];
-    await gitDeploy.push(config);
+    await gitDeploy.push(config, gitDeployOpts);
 
     const destLog = await commitLog(destRepo, "master");
     assert.equal(destLog.length, 2);
@@ -187,7 +191,7 @@ async function test(sourceRepoPath, destRepoPath) {
   {
     delete process.env["CIRCLE_TAG"];
     delete process.env["CIRCLE_BRANCH"];
-    await gitDeploy.push(config);
+    await gitDeploy.push(config, gitDeployOpts);
 
     const destLog = await commitLog(destRepo, "master");
     assert.equal(destLog.length, 2);
@@ -210,7 +214,7 @@ async function test(sourceRepoPath, destRepoPath) {
 
     delete process.env["CIRCLE_TAG"];
     process.env["CIRCLE_BRANCH"] = "master";
-    await gitDeploy.push(config);
+    await gitDeploy.push(config, gitDeployOpts);
 
     const destLog = await commitLog(destRepo, "master");
     assert.equal(destLog.length, 3);
