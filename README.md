@@ -26,9 +26,9 @@ npm install orangemug/git-deploy --save
 ```
 
 ## Usage
-Git deploy looks at CI enviroment variables to determine the branch / tag that's just been tested. If the _tag_ matches a semver or the _branch_ is one of the configured branches to deploy. It'll deploy files from a specified directory locally into the destination repository.
+Git deploy looks at CI environment variables to determine the branch / tag that's just been tested. If the _tag_ matches a semver or the _branch_ is one of the configured branches to deploy. It'll deploy files from a specified directory locally into the destination repository.
 
-Ok that was a little confusing lets see an example. We've just pushed a build to our source git repository first off you're CI enviroment **must** write the build files to a directory. Below we've stored our builds in `/tmp/build`
+Ok that was a little confusing lets see an example. We've just pushed a build to our source git repository first off you're CI environment **must** write the build files to a directory. Below we've stored our builds in `/tmp/build`
 
 ```
 /tmp
@@ -82,14 +82,14 @@ Next up we need to create a config to let `git-deploy` know what needs to be dep
 
 Now when we run `git-deploy config.json` if we are building a tag (semver) or branch (defined in the config). It'll deploy the files to the remote git repository as defined in the `remote.git.url`.
 
-The tag and branch will be resolved from the enviroment variables of the CI enviroment. Currently [Travis](https://travis-ci.org) and [CircleCI](https://circleci.com/) are supported, using the following env variables.
+The tag and branch will be resolved from the environment variables of the CI environment. Currently [Travis](https://travis-ci.org) and [CircleCI](https://circleci.com/) are supported, using the following env variables.
 
  - `CIRCLE_BRANCH`
  - `CIRCLE_TAG`
  - `TRAVIS_BRANCH`
  - `TRAVIS_TAG`
 
-The resulting directory struture in the target repository will look something like this
+The resulting directory structure in the target repository will look something like this
 
 ```
 builds
@@ -106,7 +106,7 @@ You'll notice it's also added a `latest` symlink pointing towards the latest _no
 ## Config
 A JSON schema for the config can be found at [./schemas/config.json](./schemas/config.json)
 
-The config also supports bash style variables with defaults. For example the following will use the `ARTIFACTS_DIR` env variable if defined otherwise default to `public`.
+The config also supports bash style variables with defaults. For example the following will use the `ARTIFACTS_DIR` environment variable if defined otherwise default to `public`.
 
 ```json
 {
@@ -128,9 +128,9 @@ To generate builds for old tags branches use another tool called [git-cmd](https
 git-cmd --branches --tags "git-deploy check; npm build; git-deploy push"
 ```
 
-We first run `git-deploy check` to see if it's a candiate for deploy. Then we run the the build process and push the resulting files.
+We first run `git-deploy check` to see if it's a candidate for deploy. Then we run the the build process and push the resulting files.
 
-**Note:** This will need some tweeking if your build command or build file location has changed throughout time.
+**Note:** This will need some tweaking if your build command or build file location has changed throughout time.
 
 
 ## Notes

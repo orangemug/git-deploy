@@ -48,7 +48,7 @@ The setting should be fairly obvious but the important ones to change are
 
  - `local.path` - the place with the build files
  - `remote.git.url` - the git url of the build repository
- - `remote.git.path` - the subpath in the above git repo where the built files should go
+ - `remote.git.path` - the subpath in the above git repository where the built files should go
 
 
 ## GitHub
@@ -72,7 +72,7 @@ You'll also need to add your private key to the CI service. Currently we support
 ### CircleCI
 First off you'll need to create a config in your host repository. This will differ depending on your test setup on CircleCI, however an example can be found here <https://github.com/orangemug/git-deploy-demo/blob/master/.circleci/config.yml>
 
-Now head over the the CircleCI and enable builds for the source repository. While you're there also add the private key of the ssh key pair. You can do this at `https://circleci.com/gh/USER/REPO/edit#ssh`, where user repo are the `USER/REPO` of the repository you want to deploy to. The hostname should be set to `github.com`
+Now head over the CircleCI and enable builds for the source repository. While you're there also add the private key of the ssh key pair. You can do this at `https://circleci.com/gh/USER/REPO/edit#ssh`, where user repository are the `USER/REPO` of the repository you want to deploy to. The hostname should be set to `github.com`
 
 
 ### Travis CI
